@@ -1,0 +1,48 @@
+{
+  "executado_em": "2026-11-06T00:51:05+00:00",
+  "sucesso": true,
+  "duracao_s": 2.83,
+  "etapas_s": {
+    "ingestao": 0.58,
+    "curadoria": 0.52,
+    "atribuicao_e_marts": 0.13,
+    "benchmark": 1.25,
+    "relatorio": 0.34
+  },
+  "linhas_por_fonte": {
+    "google_ads": 724,
+    "meta_ads": 549,
+    "email": 27,
+    "sessoes": 106238,
+    "pedidos": 3755,
+    "clientes": 3541
+  },
+  "api": {
+    "requisicoes": 17,
+    "novas_tentativas": 5
+  },
+  "ocorrencias_de_contrato": [
+    {
+      "fonte": "meta_ads",
+      "tipo": "coluna_renomeada",
+      "coluna": "Valor usado (BRL)",
+      "detalhe": "unificada com ['Valor gasto (BRL)']"
+    }
+  ],
+  "resumo": {
+    "inicio": "2025-01-01",
+    "fim": "2025-06-30",
+    "modelo": "ultimo_nao_direto",
+    "gasto": 172353.03999999998,
+    "receita": 573540.18,
+    "pedidos": 3429,
+    "clientes_novos": 3282,
+    "cac": 52.514637416209624,
+    "roas": 3.3277056209742524
+  },
+  "verificacoes": {
+    "total": 20,
+    "criticas_com_falha": 0,
+    "alertas": 2
+  }
+}

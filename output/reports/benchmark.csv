@@ -1,0 +1,5 @@
+medida,csv,parquet,vantagem
+tamanho em disco (MB),10.7260,1.8561,5.7788
+ler a tabela inteira (ms),76.9634,3.7498,20.5245
+ler 2 colunas (ms),21.6475,1.4651,14.7752
+ler 1 mês (ms),79.9186,1.6064,49.7509
