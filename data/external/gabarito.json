@@ -1,0 +1,10 @@
+{
+ "pedidos_pagos": 3429,
+ "receita_paga": 573540.18,
+ "clientes": 3541,
+ "sessoes_validas": 100721,
+ "sessoes_robo": 4500,
+ "gasto_google": 102340.15,
+ "gasto_meta": 61154.55,
+ "gasto_email": 8858.34
+}
