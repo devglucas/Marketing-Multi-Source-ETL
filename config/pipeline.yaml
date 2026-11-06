@@ -1,0 +1,108 @@
+# Configuração do pipeline: incluir uma fonte ou mudar uma regra não exige alterar código.
+
+periodo:
+  inicio: "2025-01-01"
+  fim: "2025-06-30"
+
+lake:
+  raiz: data/lake
+
+regras:
+  hostname_producao: www.auracosmeticos.com.br
+  sessoes_por_dia_robo: 30            # acima disso, o visitante é tratado como robô
+  cliente_teste: C999999
+  valor_minimo_pedido: 1.00
+  status_receita: [pago]
+
+atribuicao:
+  janela_dias: 30
+  meia_vida_dias: 7                   # decaimento no tempo: o peso cai pela metade a cada 7 dias
+  modelo_padrao: ultimo_nao_direto    # usado em CAC e ROAS
+
+ltv:
+  marcos_dias: [30, 60, 90]
+
+fontes:
+  google_ads:
+    tipo: api
+    url_base: mock                    # "mock" sobe a API simulada; em produção, a URL real
+    rota: /v1/relatorios/campanhas
+    token_env: ADS_API_TOKEN
+    token_padrao_mock: token-da-api-simulada
+    janela_dias: 31                   # a API é consultada em janelas para não estourar limites
+    por_pagina: 100
+    tentativas: 6
+    espera_inicial_s: 0.01
+    timeout_s: 10
+    contrato:
+      campaign_id: {tipo: texto, obrigatoria: true}
+      campaign_name: {tipo: texto, obrigatoria: true}
+      segments_date: {tipo: data, obrigatoria: true}
+      metrics_impressions: {tipo: inteiro, obrigatoria: true}
+      metrics_clicks: {tipo: inteiro, obrigatoria: true}
+      metrics_costMicros: {tipo: inteiro, obrigatoria: true}
+      metrics_conversions: {tipo: numero, obrigatoria: true}
+
+  meta_ads:
+    tipo: excel
+    caminho: data/raw/meta/meta_ads_2025.xlsx
+    linha_cabecalho: 3
+    contrato:
+      Dia: {tipo: texto, obrigatoria: true}
+      Nome da campanha: {tipo: texto, obrigatoria: false}
+      Alcance: {tipo: inteiro, obrigatoria: false}
+      Impressões: {tipo: inteiro, obrigatoria: true}
+      Cliques no link: {tipo: inteiro, obrigatoria: true}
+      Valor usado (BRL): {tipo: texto, obrigatoria: true, apelidos: [Valor gasto (BRL)]}
+      Compras: {tipo: inteiro, obrigatoria: true}
+
+  email:
+    tipo: csv
+    caminho: data/raw/email/email_campanhas.csv
+    contrato:
+      campanha: {tipo: texto, obrigatoria: true}
+      data_envio: {tipo: texto, obrigatoria: true}
+      enviados: {tipo: inteiro, obrigatoria: true}
+      entregues: {tipo: inteiro, obrigatoria: true}
+      aberturas: {tipo: inteiro, obrigatoria: true}
+      cliques: {tipo: inteiro, obrigatoria: true}
+      descadastros: {tipo: inteiro, obrigatoria: true}
+      custo_brl: {tipo: texto, obrigatoria: true}
+
+  sessoes:
+    tipo: jsonl
+    padrao: data/raw/web/sessoes_*.jsonl.gz
+    contrato:
+      session_id: {tipo: texto, obrigatoria: true}
+      visitor_id: {tipo: texto, obrigatoria: true}
+      ts: {tipo: texto, obrigatoria: true}
+      hostname: {tipo: texto, obrigatoria: true}
+      utm_source: {tipo: texto, obrigatoria: false}
+      utm_medium: {tipo: texto, obrigatoria: false}
+      utm_campaign: {tipo: texto, obrigatoria: false}
+      device: {tipo: texto, obrigatoria: true}
+      pageviews: {tipo: inteiro, obrigatoria: true}
+      add_to_cart: {tipo: booleano, obrigatoria: true}
+      begin_checkout: {tipo: booleano, obrigatoria: true}
+      purchase: {tipo: booleano, obrigatoria: true}
+
+  pedidos:
+    tipo: csv
+    caminho: data/raw/loja/pedidos.csv
+    contrato:
+      pedido_id: {tipo: texto, obrigatoria: true}
+      cliente_id: {tipo: texto, obrigatoria: true}
+      visitor_id: {tipo: texto, obrigatoria: false}
+      criado_em: {tipo: texto, obrigatoria: true}
+      valor_produtos: {tipo: numero, obrigatoria: true}
+      desconto: {tipo: numero, obrigatoria: true}
+      frete: {tipo: numero, obrigatoria: true}
+      status: {tipo: texto, obrigatoria: true}
+
+  clientes:
+    tipo: json
+    caminho: data/raw/loja/clientes.json
+    contrato:
+      cliente_id: {tipo: texto, obrigatoria: true}
+      uf: {tipo: texto, obrigatoria: true}
+      cadastrado_em: {tipo: texto, obrigatoria: true}
