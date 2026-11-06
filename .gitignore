@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+
+# Segredos: nunca versionar
+.env
+
+# Lake e logs gerados pelo pipeline (recriados com `python main.py`)
+data/lake/*
+!data/lake/.gitkeep
+output/logs/
+
+# SO / editores
+.DS_Store
+.vscode/
+.idea/
