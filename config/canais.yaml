@@ -1,9 +1,9 @@
 # Classificação de canal a partir das UTMs (fonte e meio em minúsculas). A primeira regra que casar vence.
 regras:
-  - {canal: email, meio: "^(email|e-mail)$"}
-  - {canal: paid_social, meio: "^(paid_social|paidsocial|paid-social)$"}
-  - {canal: paid_social, fonte: "^(instagram|ig|facebook|fb|meta)$", meio: "^(cpc|paid|ppc)$"}
-  - {canal: paid_search, fonte: "^(google|gads|bing)$", meio: "^(cpc|ppc|paid)$"}
+  - {canal: email, meio: "^(?:email|e-mail)$"}
+  - {canal: paid_social, meio: "^(?:paid_social|paidsocial|paid-social)$"}
+  - {canal: paid_social, fonte: "^(?:instagram|ig|facebook|fb|meta)$", meio: "^(?:cpc|paid|ppc)$"}
+  - {canal: paid_search, fonte: "^(?:google|gads|bing)$", meio: "^(?:cpc|ppc|paid)$"}
   - {canal: organic, meio: "^organic$"}
   - {canal: referral, meio: "^referral$"}
 canal_sem_utm: direct
