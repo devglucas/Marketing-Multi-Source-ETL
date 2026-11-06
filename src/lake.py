@@ -64,7 +64,9 @@ def escrever(df: pd.DataFrame, raiz: Path, camada: str, tabela: str, esquema: pa
 
 
 def ler(raiz: Path, camada: str, tabela: str, colunas: list[str] | None = None, filtros: list | None = None) -> pd.DataFrame:
-    return pd.read_parquet(caminho(raiz, camada, tabela), columns=colunas, filters=filtros)
+    df = pd.read_parquet(caminho(raiz, camada, tabela), columns=colunas, filters=filtros)
+    categorias = df.select_dtypes("category").columns      # a coluna de partição volta como categoria
+    return df.astype({c: "string" for c in categorias})
 
 
 def salvar_landing(df: pd.DataFrame, raiz: Path, fonte: str) -> None:
